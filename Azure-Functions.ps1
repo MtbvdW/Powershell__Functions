@@ -9,18 +9,8 @@
        start-azurelogin
     .EXAMPLE
        start-azurelogin -remove
-    .INPUTS
-       Inputs to this cmdlet (if any)
-    .OUTPUTS
-       Output from this cmdlet (if any)
     .NOTES
-       Script created by Mark vd Waarsenburg (Sogeti) 2017
-    .COMPONENT
-       The component this cmdlet belongs to
-    .ROLE
-       The role this cmdlet belongs to
-    .FUNCTIONALITY
-       The functionality that best describes this cmdlet
+       Script created by Mark vd Waarsenburg (2017)
     #>
 
     [CmdletBinding(DefaultParameterSetName='Parameter Set 1')]
@@ -61,7 +51,9 @@ Function Select-Subscription           {
     .DESCRIPTION
        Select-Subscription
     .EXAMPLE
-       Select-Subscription      
+       Select-Subscription   
+    .EXAMPLE
+       Select-Subscription  | out-null          
     .EXAMPLE
        Select-Subscription -subscriptionnames $((Get-AzureRMSubscription).name)
     .EXAMPLE
@@ -83,12 +75,15 @@ Function Select-Subscription           {
             Write-host "#####################################################################" -for cyan
             Write-host "# Select Subscription                                               #" -for White
             Write-host "#####################################################################" -for cyan
-            foreach($_ in $subscriptionnames){
-                Write-host " $i = $($subscriptionnames[$i])"
-                $i++
-            }
-                Write-host "--------------------------------------------------------------------" -for cyan
-            $SelectedSubscription = $subscriptionnames[$(Read-host " Select Subscription number")]
+
+                foreach($_ in $subscriptionnames){
+                    Write-host " $i = $($subscriptionnames[$i])"
+                    $i++
+                }
+
+            Write-host "--------------------------------------------------------------------" -for cyan
+
+            $SelectedSubscription  = $subscriptionnames[$(Read-host " Select Subscription number")]
             $connectedSubScription = Select-AzureRMSubscription -SubscriptionName $SelectedSubscription
         
             Write-host ""
